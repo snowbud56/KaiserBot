@@ -37,8 +37,6 @@ public class UpdateCommand extends CommandBase {
                 if (!feed.isEnabled()) {
                     BotUtil.sendTemporaryMessage(channel, "That feed is disabled. I'm unable to force an update on a disabled feed. Please re-enable the feed in order to force an update.", 10);
                 } else {
-                    //set nextCheck to currentMillis - checkCooldown
-                    //access the feed's thread and run it forcefully
                     feed.forceCheck();
                 }
             }
