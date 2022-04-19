@@ -110,7 +110,7 @@ public abstract class Feed {
                         }
 
                         //makes the thread wait the minimum cooldown for all threads before updating again
-                        sleep(checkCooldown);
+                        sleep(100);
                     } catch (InterruptedException e) {
                         stop();
                     }
@@ -124,6 +124,10 @@ public abstract class Feed {
 
     public void stopThread() {
         runningThread.stop();
+    }
+
+    public void forceCheck() {
+        nextCheck = System.currentTimeMillis() - checkCooldown;
     }
 
     public FeedReader getReader() {
@@ -152,9 +156,6 @@ public abstract class Feed {
             settings.notifying = true;
         }
 
-        if (System.currentTimeMillis() < nextCheck) {
-            LogManager.logConsole(settings.name + " will check in " + TimeUtil.getDuration(TimeUnit.FIT, (int) (nextCheck - System.currentTimeMillis())), false, false);
-        }
         return System.currentTimeMillis() > nextCheck;
     }
 

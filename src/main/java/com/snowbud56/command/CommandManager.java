@@ -74,13 +74,14 @@ public class CommandManager extends ListenerAdapter {
 
     private void addCommands() {
         addCommand(new ShutdownCommand());
-        addCommand(new TestCommand());
+        addCommand(new UpdateCommand());
         addCommand(new InfoCommand());
         addCommand(new SilenceCommand());
         addCommand(new ReloadCommand());
         addCommand(new ClearCommand());
         addCommand(new ToggleCommand());
         addCommand(new SayCommand());
+        addCommand(new TestCommand());
     }
 
     private void addCommand(Command command) {

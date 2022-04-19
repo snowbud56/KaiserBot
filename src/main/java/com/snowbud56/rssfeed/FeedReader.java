@@ -19,6 +19,7 @@ import java.util.zip.GZIPInputStream;
 public class FeedReader {
 
     private Feed feed;
+    private boolean isReading = false;
     public ArrayList<FeedMessage> messages = new ArrayList<>();
 //    private ArrayList<FeedMessage> oldMessages = new ArrayList<>();
 
@@ -27,6 +28,7 @@ public class FeedReader {
     }
 
     public void readFeed(int URLindex, boolean sendMessages) {
+        isReading = true;
 //        oldMessages = (ArrayList<FeedMessage>) messages.clone();
         messages.clear();
         LogManager.logConsole("Reading " + feed.getName() + "...", false, false);
@@ -63,6 +65,8 @@ public class FeedReader {
         } catch (Exception e) {
             e.printStackTrace();
             LogManager.logConsole("Unable to access feed; " + e, true, true);
+        } finally {
+            isReading = false;
         }
     }
 
