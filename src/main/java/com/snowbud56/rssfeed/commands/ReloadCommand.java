@@ -12,6 +12,8 @@ import com.snowbud56.rssfeed.feeds.FeedInitializer;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
+import java.util.concurrent.TimeUnit;
+
 public class ReloadCommand extends CommandBase {
 
     public ReloadCommand() {
@@ -24,7 +26,7 @@ public class ReloadCommand extends CommandBase {
             FeedManager.clearFeeds();
             Config.reloadConfig();
             FeedInitializer.initializeFeeds();
-            event.reply("Reloaded feeds :+1:").queue();
+            event.reply("Reloaded feeds :+1:").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
         } else {
             event.reply("You don't have permission to execute this command, only the other can execute this command.").queue();
         }

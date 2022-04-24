@@ -37,18 +37,16 @@ public class CommandManager extends ListenerAdapter {
 
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
-        String cmdName = event.getCommandString().substring(1) + " placeholder";
-        System.out.println("command received: " + cmdName.substring(0, cmdName.indexOf(" ")));
+        String cmdName = event.getCommandString().substring(1) + " :";
         Command command = commands.get(cmdName.substring(0, cmdName.indexOf(" ")));
         if (command != null) {
-            System.out.println("command processed: " + command.getCommandName());
             command.setGuild(event.getGuild());
             command.setChannel(event.getChannel());
             LogManager.logConsole("Command executed: " + event.getMember().getUser().getName() + " (ID:" + event.getMember().getUser().getId() + ") executed command \"" + event.getCommandString() + "\"", false, true);
             runCommand(command, event);
         }
         else {
-            event.reply("Something happened and I wasn't able to find that command. Please contact snowbud56 to fix it.").queue();
+            event.reply("Something happened and I wasn't able to find that command. Please contact <@142851757914062848> to fix it.").queue();
         }
     }
 
@@ -92,6 +90,7 @@ public class CommandManager extends ListenerAdapter {
             command.setGuild(event.getGuild());
             command.execute(event);
         } catch (Exception e) {
+            event.reply("An error occurred, please contact <@142851757914062848> to fix it.").queue();
             LogManager.logConsole("Something went wrong!", true, true);
             e.printStackTrace();
         }

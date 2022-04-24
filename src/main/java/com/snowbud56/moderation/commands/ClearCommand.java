@@ -14,6 +14,8 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
+import java.util.concurrent.TimeUnit;
+
 public class ClearCommand extends CommandBase {
 
     public ClearCommand() {
@@ -31,7 +33,7 @@ public class ClearCommand extends CommandBase {
 
         channel.getHistory().retrievePast(amount).queue(BotUtil::deleteMessages);
 
-        event.reply(":+1:").queue();
+        event.reply(":+1:").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
 
     }
 

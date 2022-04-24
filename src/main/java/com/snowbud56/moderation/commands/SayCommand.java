@@ -10,6 +10,8 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
+import java.util.concurrent.TimeUnit;
+
 public class SayCommand extends CommandBase {
 
     public SayCommand() {
@@ -20,7 +22,7 @@ public class SayCommand extends CommandBase {
     public void execute(SlashCommandEvent event) {
         if (event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
             BotUtil.sendMessage(channel, event.getOption("message").getAsString().replace("\\n", "\n"));
-            event.reply(":+1:").queue();
+            event.reply(":+1:").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
         } else {
             event.reply("You don't have permission to execute this command.").queue();
         }

@@ -22,7 +22,7 @@ public class MusicReleasedFeed extends Feed {
     public MusicReleasedFeed() {
         super(1);
 
-        this.setEnabled(false);
+//        this.setEnabled(false);
     }
 
     public void testAddLink() {

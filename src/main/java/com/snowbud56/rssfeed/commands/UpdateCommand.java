@@ -23,35 +23,18 @@ public class UpdateCommand extends CommandBase {
 
     @Override
     public void execute(SlashCommandEvent event) {
-        if (event.getOption("checkid") == null) {
-            FeedManager.sendFeedListMessage(event, commandName);
-            return;
-        }
-
-        Feed feed = FeedManager.getFeed((int) event.getOption("checkid").getAsLong());
-        if (feed == null)
-            BotUtil.sendTemporaryMessage(channel, "That feed doesn't exist!", 10);
-        else {
-            if (!(feed instanceof LiveIncidentFeed))
-                event.reply("Forcing a check for that feed...").queue();
-
-            if (!feed.isEnabled()) {
-                event.reply("That feed is disabled. I'm unable to force an update on a disabled feed. Please re-enable the feed in order to force an update.").queue();
-            } else {
-                feed.forceCheck();
-            }
-        }
+        FeedManager.sendFeedListMessage(event, commandName);
     }
 
     @Override
     public void onButtonPress(Feed feed, ButtonClickEvent event) {
+        event.reply("Forcing a check for " + feed.getName() + "!").queue();
         feed.forceCheck();
-        event.reply("Forced a check for " + feed.getName() + "!").queue();
     }
 
     @Override
     public CommandData getCommandData() {
-        return commandData.addOption(OptionType.INTEGER, "checkid", "ID of the feed.");
+        return commandData;
     }
 
     @Override
