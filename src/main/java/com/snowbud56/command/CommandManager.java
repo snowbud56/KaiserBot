@@ -10,17 +10,17 @@ import com.snowbud56.config.Config;
 import com.snowbud56.general.ShutdownCommand;
 import com.snowbud56.moderation.commands.ClearCommand;
 import com.snowbud56.moderation.commands.SayCommand;
+import com.snowbud56.rssfeed.FeedManager;
 import com.snowbud56.rssfeed.commands.*;
+import com.snowbud56.rssfeed.feeds.Feed;
 import com.snowbud56.utils.managers.LogManager;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,32 +36,61 @@ public class CommandManager extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-        String message = event.getMessage().getContentRaw();
-        MessageChannel channel = event.getChannel();
-        if (message.startsWith(Config.getInstance().getString("commandPrefix"))) {
-            String commandName = message.substring(1);
-            String[] args = null;
-            if (commandName.contains(" ")) {
-                commandName = commandName.split(" ")[0];
-                args = message.substring(message.indexOf(' ') + 1).split(" ");
-            }
-            Command command = commands.get(commandName.toLowerCase());
-            if (command != null) {
-                if (args == null) args = new String[]{};
-                event.getMessage().delete().queue();
-                LogManager.logConsole("Command executed: " + event.getAuthor().getName() + " (ID:" + event.getAuthor().getId() + ") executed " + Config.getInstance().getString("commandPrefix") + commandName.toLowerCase() + " " + Arrays.toString(args).replace("[", "").replace("]", "").replace(",", ""), false, true);
-                runCommand(command, commandName, event.getMember(), event.getAuthor(), channel, event.getMessage(), args);
-            }
+    public void onSlashCommand(SlashCommandEvent event) {
+        String cmdName = event.getCommandString().substring(1) + " placeholder";
+        System.out.println("command received: " + cmdName.substring(0, cmdName.indexOf(" ")));
+        Command command = commands.get(cmdName.substring(0, cmdName.indexOf(" ")));
+        if (command != null) {
+            System.out.println("command processed: " + command.getCommandName());
+            command.setGuild(event.getGuild());
+            command.setChannel(event.getChannel());
+            LogManager.logConsole("Command executed: " + event.getMember().getUser().getName() + " (ID:" + event.getMember().getUser().getId() + ") executed command \"" + event.getCommandString() + "\"", false, true);
+            runCommand(command, event);
+        }
+        else {
+            event.reply("Something happened and I wasn't able to find that command. Please contact snowbud56 to fix it.").queue();
         }
     }
 
-    private void runCommand(Command command, String commandName, Member member, User user, MessageChannel channel, Message message, String[] args) {
-        try {
-            command.setAliasUsed(commandName.toLowerCase());
+    @Override
+    public void onButtonClick(@NotNull ButtonClickEvent event) {
+        String[] id = event.getComponentId().split(":");
+        String authorID = id[0];
+        String feedID = id[1];
+        String commandName = id[2];
 
-            command.setGuild(KaiserBot.getJDA().getGuildById(Config.getInstance().getString("guildID")));
-            command.execute(member, channel, args);
+        if (!authorID.equals(event.getMember().getId()))
+            return;
+
+        Feed feed = FeedManager.getFeed(Integer.parseInt(feedID));
+        commands.get(commandName.toLowerCase()).onButtonPress(feed, event);
+    }
+
+    //    @Override
+//    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+//        String message = event.getMessage().getContentRaw();
+//        MessageChannel channel = event.getChannel();
+//        if (message.startsWith(Config.getInstance().getString("commandPrefix"))) {
+//            String commandName = message.substring(1);
+//            String[] args = null;
+//            if (commandName.contains(" ")) {
+//                commandName = commandName.split(" ")[0];
+//                args = message.substring(message.indexOf(' ') + 1).split(" ");
+//            }
+//            Command command = commands.get(commandName.toLowerCase());
+//            if (command != null) {
+//                if (args == null) args = new String[]{};
+//                event.getMessage().delete().queue();
+//                LogManager.logConsole("Command executed: " + event.getAuthor().getName() + " (ID:" + event.getAuthor().getId() + ") executed " + Config.getInstance().getString("commandPrefix") + commandName.toLowerCase() + " " + Arrays.toString(args).replace("[", "").replace("]", "").replace(",", ""), false, true);
+//                runCommand(command, event);
+//            }
+//        }
+//    }
+
+    private void runCommand(Command command, SlashCommandEvent event) {
+        try {
+            command.setGuild(event.getGuild());
+            command.execute(event);
         } catch (Exception e) {
             LogManager.logConsole("Something went wrong!", true, true);
             e.printStackTrace();
@@ -73,21 +102,27 @@ public class CommandManager extends ListenerAdapter {
     }
 
     private void addCommands() {
-        addCommand(new ShutdownCommand());
-        addCommand(new UpdateCommand());
-        addCommand(new InfoCommand());
-        addCommand(new SilenceCommand());
-        addCommand(new ReloadCommand());
-        addCommand(new ClearCommand());
-        addCommand(new ToggleCommand());
-        addCommand(new SayCommand());
+        addCommand(new ShutdownCommand(),
+                new UpdateCommand(),
+                new InfoCommand(),
+                new SilenceCommand(),
+                new ReloadCommand(),
+                new ClearCommand(),
+                new ToggleCommand(),
+                new SayCommand());
     }
 
-    private void addCommand(Command command) {
-        for (String alias : command.getAliases()) {
-            commands.put(alias.toLowerCase(), command);
-            System.out.println("Initialized command: " + Config.getInstance().getString("commandPrefix") + alias);
+    private void addCommand(Command... cmds) {
+        CommandListUpdateAction slashCommands = KaiserBot.getJDA().updateCommands();
+        for (Command command : cmds) {
+            System.out.println("Initialized command: /" + command.getCommandName().toLowerCase());
+
+            commands.put(command.getCommandName().toLowerCase(), command);
+
+            slashCommands.addCommands(command.getCommandData());
+            commandList.add(command);
         }
-        commandList.add(command);
+
+        slashCommands.queue();
     }
 }

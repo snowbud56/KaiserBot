@@ -68,7 +68,7 @@ public class LiveIncidentFeed extends Feed {
             }
 
             //adds the apparatuses to the incident
-            stringBuilder.append(messageContent.toString());
+            stringBuilder.append(messageContent);
 
             //puts the builder into the map
             messagesBuilders.put(mapKey, stringBuilder);

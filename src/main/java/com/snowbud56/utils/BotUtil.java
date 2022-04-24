@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 public class BotUtil {
@@ -43,6 +44,11 @@ public class BotUtil {
     public static boolean deleteMessage(Message message) {
         if (canDelete(message)) message.delete().queue();
         return canDelete(message);
+    }
+
+    public static void deleteMessages(Collection<Message> messages) {
+        for (Message msg : messages)
+            deleteMessage(msg);
     }
 
     public static boolean canDelete(Message message) {

@@ -6,7 +6,6 @@ import java.util.Date;
 
 public class TimeUtil {
 
-
     public static String getDate() {
 
         DateFormat format = new SimpleDateFormat("MM/dd/yyyy");

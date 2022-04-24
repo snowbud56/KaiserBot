@@ -5,19 +5,25 @@ package com.snowbud56.command;
 * Do not change or use this code without permission
 */
 
-import net.dv8tion.jda.api.entities.MessageChannel;
+import com.snowbud56.rssfeed.feeds.Feed;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
 import java.util.Collection;
 
 public interface Command {
 
-    void execute(Member member, MessageChannel channel, String[] args);
+    void execute(SlashCommandEvent event);
 
-    Collection<String> getAliases();
-
-    void setAliasUsed(String s);
     void setGuild(Guild guild);
+    void setChannel(MessageChannel channel);
+
+    CommandData getCommandData();
+    String getCommandName();
+
+    void onButtonPress(Feed feed, ButtonClickEvent event);
 
 }

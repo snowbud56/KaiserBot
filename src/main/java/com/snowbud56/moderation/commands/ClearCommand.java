@@ -8,7 +8,11 @@ package com.snowbud56.moderation.commands;
 import com.snowbud56.command.CommandBase;
 import com.snowbud56.utils.BotUtil;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
 public class ClearCommand extends CommandBase {
 
@@ -17,19 +21,28 @@ public class ClearCommand extends CommandBase {
     }
 
     @Override
-    public void execute(Member member, MessageChannel channel, String[] args) {
-        if (args.length == 0) {
-            try {
-                channel.getHistoryFromBeginning(100).complete().getRetrievedHistory()
-                        .forEach(BotUtil::deleteMessage);
-            } catch (Exception ignored) {}
-        } else {
-            try {
-                channel.getHistoryBefore(channel.getLatestMessageId(), Integer.parseInt(args[0])).complete().getRetrievedHistory()
-                        .forEach(BotUtil::deleteMessage);
-            } catch (Exception e) {
-                BotUtil.sendMessage(channel, "That is not a valid number! Usage: /clear <amount>");
-            }
-        }
+    public void execute(SlashCommandEvent event) {
+        Integer amount;
+        if (event.getOption("amount") == null)
+            amount = 100;
+        else
+            amount = (int) event.getOption("amount").getAsLong();
+//        event.deferReply(true).queue();
+
+        channel.getHistory().retrievePast(amount).queue(BotUtil::deleteMessages);
+
+        event.reply(":+1:").queue();
+
+    }
+
+    @Override
+    public CommandData getCommandData() {
+        commandData.addOption(OptionType.INTEGER, "amount", "Number of messages to delete.");
+        return commandData;
+    }
+
+    @Override
+    protected String getDescription() {
+        return "Clears messages in the channel.";
     }
 }

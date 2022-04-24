@@ -6,32 +6,52 @@ import com.snowbud56.rssfeed.feeds.Feed;
 import com.snowbud56.utils.BotUtil;
 import com.snowbud56.utils.TimeUnit;
 import com.snowbud56.utils.TimeUtil;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class SilenceCommand extends CommandBase {
 
     public SilenceCommand() {
-        super("silence", "donotdisturb", "dnd", "shutup");
+        super("silence");
     }
-    @Override
-    public void execute(Member member, MessageChannel channel, String[] args) {
 
-        if (args.length == 0) {
-            FeedManager.sendFeedListMessage(channel);
+    @Override
+    public void execute(SlashCommandEvent event) {
+
+        if (event.getOption("silenceid") == null || event.getOption("seconds") == null) {
+            FeedManager.sendFeedListMessage(event, commandName);
             return;
         }
-        try {
-            Feed feed = FeedManager.getFeed(Integer.parseInt(args[0]));
-            if (feed == null)
-                BotUtil.sendTemporaryMessage(channel, "That feed doesn't exist!", 10);
-            else {
-                feed.setNotifying(false);
-                feed.setTimeToNotify(System.currentTimeMillis() + (Integer.parseInt((args[1])) * 60000L));
-                BotUtil.sendTemporaryMessage(channel, "Okay! I will stop notifying you for " + TimeUtil.getDuration(TimeUnit.FIT, (Integer.parseInt((args[1])) * 60000)), 10);
-            }
-        } catch (IllegalArgumentException e) {
-            BotUtil.sendMessage(channel, "Invalid argument! Please put **2** numbers. Usage: /silence <Feed ID> <Amount (in minutes)>");
+        Feed feed = FeedManager.getFeed((int) event.getOption("silenceid").getAsLong());
+        if (feed == null)
+            event.reply("That feed doesn't exist!").queue();
+        else {
+            feed.setNotifying(false);
+            feed.setTimeToNotify(System.currentTimeMillis() + (((int) event.getOption("seconds").getAsLong()) * 60000L));
+            event.reply("Okay! I will stop notifying you for " + TimeUtil.getDuration(TimeUnit.FIT, (((int) event.getOption("seconds").getAsLong()) * 60000))).queue();
         }
+    }
+
+    @Override
+    public CommandData getCommandData() {
+        return commandData.addOptions(
+                new OptionData(OptionType.INTEGER, "silenceid", "ID of the feed (use /info for feed IDs)", true),
+                new OptionData(OptionType.INTEGER, "seconds", "Length in seconds", true)
+                );
+    }
+
+    @Override
+    protected String getDescription() {
+        return "Silences a given feed for the given time.";
     }
 }

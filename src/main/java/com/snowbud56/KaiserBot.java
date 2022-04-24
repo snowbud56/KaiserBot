@@ -18,6 +18,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.io.File;
@@ -54,13 +55,12 @@ public class KaiserBot extends ListenerAdapter {
             e.printStackTrace();
             return;
         }
+        LogManager.logConsole("Logged in as " + getJDA().getSelfUser().getName() + "#" + getJDA().getSelfUser().getDiscriminator() + "!", false, true);
 
         startThread();
         registerListeners(JDA, new CommandManager());
 
         FeedInitializer.initializeFeeds();
-
-        LogManager.logConsole("Logged in as " + getJDA().getSelfUser().getName() + "#" + getJDA().getSelfUser().getDiscriminator() + "!", false, true);
 
         TimingUtil.Timing time = TimingUtil.stopTiming("startBot");
         LogManager.logConsole("Bot started in " + TimeUtil.getDuration(TimeUnit.FIT, (int) time.getMilliDuration()), false, true);

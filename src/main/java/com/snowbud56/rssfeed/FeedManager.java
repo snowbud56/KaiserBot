@@ -6,16 +6,11 @@ package com.snowbud56.rssfeed;
  */
 
 import com.snowbud56.rssfeed.feeds.Feed;
-import com.snowbud56.utils.BotUtil;
-import com.snowbud56.utils.managers.LogManager;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.components.Button;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FeedManager {
 
@@ -27,9 +22,7 @@ public class FeedManager {
     }
 
     public static void stopThreads() {
-        for (Feed feed : feeds) {
-            feed.stopThread();
-        }
+        feeds.forEach(Feed::stopThread);
     }
 
     public static void clearFeeds() {
@@ -38,22 +31,17 @@ public class FeedManager {
 
     public static Feed getFeed(int id) {
         for (Feed feed : feeds) {
-            if (feed.getID() == id) {
+            if (feed.getID() == id)
                 return feed;
-            }
         }
         return null;
     }
 
-    public static void sendFeedListMessage(MessageChannel channel) {
-        EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("Avaliable Feeds");
-        embed.setColor(new Color(255, 254, 0));
+    public static void sendFeedListMessage(SlashCommandEvent event, String commandUsed) {
+        List<Button> buttons = new ArrayList<>();
         for (Feed feed : feeds) {
-            embed.addField(
-                    feed.getID() + ". " + feed.getName(),
-                    feed.getURL().toString().replace("[", "").replace("]", "").replace(", ", "\n"), false);
+            buttons.add(Button.primary(event.getUser().getId() + ":" + feed.getID() + ":" + commandUsed, feed.getName()));
         }
-        BotUtil.sendTemporaryMessage(channel, embed.build(), 10);
+        event.reply("Here are the list of feeds:").addActionRow(buttons).queue();
     }
 }
