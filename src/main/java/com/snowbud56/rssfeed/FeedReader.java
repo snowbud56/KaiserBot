@@ -82,7 +82,7 @@ public class FeedReader {
 
         } catch (Exception e) {
             e.printStackTrace();
-            LogManager.logConsole("Unable to access feed; " + e, true, true);
+            LogManager.logConsole("Unable to access feed " + feed.getName() + "\n" + e, true, true);
         } finally {
             isReading = false;
         }

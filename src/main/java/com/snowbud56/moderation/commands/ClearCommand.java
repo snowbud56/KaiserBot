@@ -33,7 +33,7 @@ public class ClearCommand extends CommandBase {
 
         channel.getHistory().retrievePast(amount).queue(BotUtil::deleteMessages);
 
-        event.reply(":+1:").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
+        event.reply(":+1:").setEphemeral(true).queue();
 
     }
 

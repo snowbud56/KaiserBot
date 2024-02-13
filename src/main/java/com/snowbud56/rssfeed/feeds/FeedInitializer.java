@@ -9,8 +9,10 @@ import com.snowbud56.rssfeed.FeedManager;
 
 public class FeedInitializer {
 
+    static BlueRidgeFeed blueRidgeFeed;
+
     public static void initializeFeeds() {
         FeedManager.addFeed(new LiveIncidentFeed());
-        FeedManager.addFeed(new MusicReleasedFeed());
+        blueRidgeFeed = new BlueRidgeFeed();
     }
 }

@@ -106,7 +106,7 @@ public abstract class Feed {
 
                             //logs how long it took to update
                             long timeUpdated = System.currentTimeMillis() - startedUpdating;
-                            LogManager.logConsole("Took " + (timeUpdated < 1000 ? timeUpdated + "ms" : TimeUtil.getDuration(TimeUnit.FIT, (int) timeUpdated)) + "to update", false, false);
+                            LogManager.logConsole("Took " + TimeUtil.getDuration(TimeUnit.FIT, timeUpdated) + " to update", false, false);
                         }
 
                         //makes the thread wait the minimum cooldown for all threads before updating again
@@ -144,7 +144,7 @@ public abstract class Feed {
             BotUtil.sendMessage(channel, "This feed has been enabled.");
             startThread();
         } else {
-            BotUtil.sendMessage(channel, "This feed has been disabled.");
+//            BotUtil.sendMessage(channel, "This feed has been disabled.");
             stopThread();
         }
     }
@@ -166,8 +166,8 @@ public abstract class Feed {
         properties.put("2. Enabled", isEnabled());
         properties.put("3. Name", getName());
         properties.put("4. URL", getURL());
-        properties.put("5. Check cooldown", TimeUtil.getDuration(TimeUnit.FIT, (int) getCheckCooldown()) + " (" + getCheckCooldown() + "ms)");
-        properties.put("6. Next check", TimeUtil.getDuration(TimeUnit.FIT, (int) (getNextCheck() - System.currentTimeMillis())));
+        properties.put("5. Check cooldown", TimeUtil.getDuration(TimeUnit.FIT, getCheckCooldown()) + " (" + getCheckCooldown() + "ms)");
+        properties.put("6. Next check", TimeUtil.getDuration(TimeUnit.FIT, getNextCheck() - System.currentTimeMillis()));
         properties.put("7. Notify Filters", getNotifyFilters().toString().replace("[", "").replace("]","").replace(", ", "\n"));
 
         int i = 8;

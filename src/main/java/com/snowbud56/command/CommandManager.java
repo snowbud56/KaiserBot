@@ -10,6 +10,7 @@ import com.snowbud56.config.Config;
 import com.snowbud56.general.ShutdownCommand;
 import com.snowbud56.moderation.commands.ClearCommand;
 import com.snowbud56.moderation.commands.SayCommand;
+import com.snowbud56.musicplayer.command.*;
 import com.snowbud56.rssfeed.FeedManager;
 import com.snowbud56.rssfeed.commands.*;
 import com.snowbud56.rssfeed.feeds.Feed;
@@ -23,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 
 public class CommandManager extends ListenerAdapter {
 
@@ -42,11 +45,11 @@ public class CommandManager extends ListenerAdapter {
         if (command != null) {
             command.setGuild(event.getGuild());
             command.setChannel(event.getChannel());
-            LogManager.logConsole("Command executed: " + event.getMember().getUser().getName() + " (ID:" + event.getMember().getUser().getId() + ") executed command \"" + event.getCommandString() + "\"", false, true);
+            LogManager.logConsole("Command executed: " + event.getUser().getId() + " (ID:" + event.getUser().getId() + ") executed command \"" + event.getCommandString() + "\"", false, true);
             runCommand(command, event);
         }
         else {
-            event.reply("Something happened and I wasn't able to find that command. Please contact <@142851757914062848> to fix it.").queue();
+            event.reply("Something happened and I wasn't able to find that command. Please contact <@142851757914062848> to fix it.").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
         }
     }
 
@@ -57,8 +60,10 @@ public class CommandManager extends ListenerAdapter {
         String feedID = id[1];
         String commandName = id[2];
 
-        if (!authorID.equals(event.getMember().getId()))
+        if (!authorID.equals(event.getUser().getId())) {
+            event.deferReply(true).queue();
             return;
+        }
 
         Feed feed = FeedManager.getFeed(Integer.parseInt(feedID));
         commands.get(commandName.toLowerCase()).onButtonPress(feed, event);
@@ -90,7 +95,7 @@ public class CommandManager extends ListenerAdapter {
             command.setGuild(event.getGuild());
             command.execute(event);
         } catch (Exception e) {
-            event.reply("An error occurred, please contact <@142851757914062848> to fix it.").queue();
+            event.reply("An error occurred, please contact <@142851757914062848> to fix it.").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
             LogManager.logConsole("Something went wrong!", true, true);
             e.printStackTrace();
         }
@@ -103,12 +108,24 @@ public class CommandManager extends ListenerAdapter {
     private void addCommands() {
         addCommand(new ShutdownCommand(),
                 new UpdateCommand(),
+                new AnnounceCommand(),
                 new InfoCommand(),
                 new SilenceCommand(),
                 new ReloadCommand(),
                 new ClearCommand(),
                 new ToggleCommand(),
-                new SayCommand());
+                new SayCommand(),
+
+                //Music Commands
+                new JoinCommand(),
+                new PlayCommand(),
+                new SkipCommand(),
+                new StopCommand(),
+                new QueueCommand(),
+                new VolumeCommand(),
+                new RepeatCommand(),
+                new LeaveCommand(),
+                new PauseCommand());
     }
 
     private void addCommand(Command... cmds) {

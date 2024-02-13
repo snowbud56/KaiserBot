@@ -11,6 +11,7 @@ import com.snowbud56.rssfeed.feeds.Feed;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public abstract class CommandBase implements Command {
     protected CommandData commandData;
@@ -36,6 +38,21 @@ public abstract class CommandBase implements Command {
     @Override
     public String getCommandName() {
         return commandName;
+    }
+
+    protected void reply(SlashCommandEvent event, boolean hiddenFromOthers, String message) {
+        event.reply(message).setEphemeral(hiddenFromOthers).queue((msg) -> {
+            if (!hiddenFromOthers)
+                msg.deleteOriginal().queueAfter(30, TimeUnit.SECONDS);
+        });
+    }
+
+    protected void editReply(SlashCommandEvent event, String message) {
+        event.getHook().editOriginal(message).queue();
+    }
+
+    protected void defer(SlashCommandEvent event, boolean hiddenFromOthers) {
+        event.deferReply(hiddenFromOthers).queue();
     }
 
     protected abstract String getDescription();

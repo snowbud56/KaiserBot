@@ -28,30 +28,30 @@ public class SilenceCommand extends CommandBase {
     @Override
     public void execute(SlashCommandEvent event) {
 
-        if (event.getOption("silenceid") == null || event.getOption("seconds") == null) {
+        if (event.getOption("id") == null || event.getOption("minutes") == null) {
             FeedManager.sendFeedListMessage(event, commandName);
             return;
         }
-        Feed feed = FeedManager.getFeed((int) event.getOption("silenceid").getAsLong());
+        Feed feed = FeedManager.getFeed((int) event.getOption("id").getAsLong());
         if (feed == null)
-            event.reply("That feed doesn't exist!").queue();
+            reply(event, true, "That feed doesn't exist!");
         else {
             feed.setNotifying(false);
-            feed.setTimeToNotify(System.currentTimeMillis() + (((int) event.getOption("seconds").getAsLong()) * 60000L));
-            event.reply("Okay! I will stop notifying you for " + TimeUtil.getDuration(TimeUnit.FIT, (((int) event.getOption("seconds").getAsLong()) * 60000))).queue();
+            feed.setTimeToNotify(System.currentTimeMillis() + (((int) event.getOption("minutes").getAsLong()) * 60000L));
+            reply(event, true, "Okay! I will stop notifying you for " + TimeUtil.getDuration(TimeUnit.FIT, ((event.getOption("minutes").getAsLong()) * 60000)) + " for the " + feed.getName());
         }
     }
 
     @Override
     public CommandData getCommandData() {
         return commandData.addOptions(
-                new OptionData(OptionType.INTEGER, "silenceid", "ID of the feed (use /info for feed IDs)", true),
-                new OptionData(OptionType.INTEGER, "seconds", "Length in seconds", true)
+                new OptionData(OptionType.INTEGER, "id", "ID of the feed (use /info for feed IDs)", true),
+                new OptionData(OptionType.INTEGER, "minutes", "Length in minutes", true)
                 );
     }
 
     @Override
     protected String getDescription() {
-        return "Silences a given feed for the given time.";
+        return "Silences the given feed for the given time.";
     }
 }

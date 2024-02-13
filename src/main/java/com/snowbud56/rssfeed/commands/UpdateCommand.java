@@ -8,12 +8,11 @@ package com.snowbud56.rssfeed.commands;
 import com.snowbud56.command.CommandBase;
 import com.snowbud56.rssfeed.FeedManager;
 import com.snowbud56.rssfeed.feeds.Feed;
-import com.snowbud56.rssfeed.feeds.LiveIncidentFeed;
-import com.snowbud56.utils.BotUtil;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+
+import java.util.concurrent.TimeUnit;
 
 public class UpdateCommand extends CommandBase {
 
@@ -28,7 +27,7 @@ public class UpdateCommand extends CommandBase {
 
     @Override
     public void onButtonPress(Feed feed, ButtonClickEvent event) {
-        event.reply("Forcing a check for " + feed.getName() + "!").queue();
+        event.reply("Forcing a check for " + feed.getName() + "!").setEphemeral(true).queue();
         feed.forceCheck();
     }
 
@@ -39,6 +38,6 @@ public class UpdateCommand extends CommandBase {
 
     @Override
     protected String getDescription() {
-        return "Forces the given feed to update.";
+        return "Forces the selected feed to update.";
     }
 }

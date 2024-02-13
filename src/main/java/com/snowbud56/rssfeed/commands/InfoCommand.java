@@ -17,6 +17,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class InfoCommand extends CommandBase {
 
@@ -43,7 +44,7 @@ public class InfoCommand extends CommandBase {
 
         propertyIDs.forEach((IDs) -> embed.addField(IDs, feedProperties.get(IDs).toString(), false));
 
-        event.replyEmbeds(embed.build()).queue();
+        event.replyEmbeds(embed.build()).queue((message) -> message.deleteOriginal().queueAfter(1, TimeUnit.MINUTES));
     }
 
     @Override
@@ -53,6 +54,6 @@ public class InfoCommand extends CommandBase {
 
     @Override
     protected String getDescription() {
-        return "Displays useful information about a feed.";
+        return "Displays useful information about the selected feed.";
     }
 }

@@ -22,11 +22,14 @@ public class TimeUtil {
         return format.format(new Date());
     }
 
-    public static String getDuration(TimeUnit unit, Integer milliseconds) {
+    public static String getDuration(TimeUnit unit, Long milliseconds) {
         if (unit == TimeUnit.FIT) {
-            int seconds = milliseconds/1000;
+            if (milliseconds < 1000) {
+                return milliseconds + " milliseconds";
+            }
+            long seconds = milliseconds/1000;
             StringBuilder builder = new StringBuilder();
-            int updatedSec = seconds;
+            long updatedSec = seconds;
             TimeUnit curUnit = TimeUnit.DAY;
             while (curUnit != null) {
 
@@ -49,11 +52,11 @@ public class TimeUtil {
         return MathUtil.roundToTens((double) milliseconds /1000, (double) unit.getSeconds()) + " " + unit.name().toLowerCase();
     }
 
-    private static int getAmount(TimeUnit unit, int seconds) {
-        return ((seconds - (seconds % unit.getSeconds())) / unit.getSeconds());
+    private static long getAmount(TimeUnit unit, long seconds) {
+        return ((seconds - (seconds % unit.getSeconds())) / (long) unit.getSeconds());
     }
 
-    private static int getSecondsRounded(TimeUnit unit, int seconds) {
+    private static long getSecondsRounded(TimeUnit unit, long seconds) {
         return seconds % unit.getSeconds();
     }
 

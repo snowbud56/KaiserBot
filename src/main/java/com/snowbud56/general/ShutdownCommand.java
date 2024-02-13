@@ -12,13 +12,13 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 public class ShutdownCommand extends CommandBase {
 
     public ShutdownCommand() {
-        super("stop");
+        super("shutdown");
     }
 
     @Override
     public void execute(SlashCommandEvent event) {
-        if (event.getMember().getUser().getId().equals(Config.getInstance().getString("ownerID"))) {
-            event.reply("Shutting down after running for " + KaiserBot.getTimeSinceStart(TimeUnit.FIT)).complete();
+        if (event.getUser().getId().equals(Config.getInstance().getString("ownerID"))) {
+            event.reply("Shutting down after running for " + KaiserBot.getTimeSinceStart(TimeUnit.FIT)).setEphemeral(true).complete();
             KaiserBot.shutdown();
         }
     }

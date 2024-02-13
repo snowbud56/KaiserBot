@@ -7,6 +7,7 @@ package com.snowbud56.rssfeed.feeds;
 
 import com.snowbud56.rssfeed.FeedMessage;
 import com.snowbud56.utils.BotUtil;
+import com.snowbud56.utils.TimeUtil;
 import com.snowbud56.utils.managers.LogManager;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageHistory;
@@ -106,7 +107,9 @@ public class LiveIncidentFeed extends Feed {
 
                         //edits the message and removes it from the deletes and messagesBuilder map
                         if (builder != null) {
-                            message.editMessage(builder.toString()).complete();
+                            if (!message.getContentRaw().equalsIgnoreCase(builder.toString())) {
+                                message.editMessage(builder.toString()).complete();
+                            }
                             shouldDelete.put(message, false);
                             messagesBuilders.remove(compare);
                         }
@@ -133,6 +136,12 @@ public class LiveIncidentFeed extends Feed {
         //send "none :)" if there are no emergencies
         if (noIncidents) {
             BotUtil.sendMessage(channel, "None! :smile:");
+        }
+
+        if (numOfIncidents > 60) {
+            setNextCheck(System.currentTimeMillis() + getCheckCooldown() + (numOfIncidents - 60) * 5000L);
+            LogManager.logConsole("Too many incidents (" + numOfIncidents + "), the next check will be in " + TimeUtil.getDuration(com.snowbud56.utils.TimeUnit.FIT, getNextCheck() - System.currentTimeMillis()), false, false);
+            BotUtil.sendMessage(channel, "Too many incidents (" + numOfIncidents + "), the next check will be in " + TimeUtil.getDuration(com.snowbud56.utils.TimeUnit.FIT, getNextCheck() - System.currentTimeMillis()));
         }
     }
 

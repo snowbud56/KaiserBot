@@ -8,9 +8,11 @@ package com.snowbud56.rssfeed;
 import com.snowbud56.rssfeed.feeds.Feed;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.interactions.components.ButtonStyle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class FeedManager {
 
@@ -40,8 +42,8 @@ public class FeedManager {
     public static void sendFeedListMessage(SlashCommandEvent event, String commandUsed) {
         List<Button> buttons = new ArrayList<>();
         for (Feed feed : feeds) {
-            buttons.add(Button.primary(event.getUser().getId() + ":" + feed.getID() + ":" + commandUsed, feed.getName()));
+            buttons.add(Button.of(ButtonStyle.SUCCESS, event.getUser().getId() + ":" + feed.getID() + ":" + commandUsed, feed.getName()));
         }
-        event.reply("Here are the list of feeds:").addActionRow(buttons).queue();
+        event.reply("Here are the list of feeds:").setEphemeral(true).addActionRow(buttons).queue((message) -> message.deleteOriginal().queueAfter(1, TimeUnit.MINUTES));
     }
 }

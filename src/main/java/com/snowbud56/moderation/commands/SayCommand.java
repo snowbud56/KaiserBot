@@ -5,6 +5,7 @@ import com.snowbud56.utils.BotUtil;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -20,11 +21,11 @@ public class SayCommand extends CommandBase {
 
     @Override
     public void execute(SlashCommandEvent event) {
-        if (event.getMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+        if (event.getMember().hasPermission(Permission.MESSAGE_MANAGE) || (event.getChannel() instanceof PrivateChannel)) {
             BotUtil.sendMessage(channel, event.getOption("message").getAsString().replace("\\n", "\n"));
             event.reply(":+1:").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
         } else {
-            event.reply("You don't have permission to execute this command.").queue();
+            event.reply("You don't have permission to execute this command.").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
         }
     }
 

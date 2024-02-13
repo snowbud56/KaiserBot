@@ -13,16 +13,18 @@ import com.snowbud56.utils.TimeUnit;
 import com.snowbud56.utils.TimeUtil;
 import com.snowbud56.utils.TimingUtil;
 import com.snowbud56.utils.managers.LogManager;
+import com.snowbud56.utils.messages.MessageHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import java.io.File;
 import java.security.CodeSource;
+import java.util.EnumSet;
 
 public class KaiserBot extends ListenerAdapter {
 
@@ -44,8 +46,16 @@ public class KaiserBot extends ListenerAdapter {
             JDABuilder builder = JDABuilder.createDefault(Config.getInstance().getString("token"));
             builder.setAutoReconnect(true);
             builder.setStatus(OnlineStatus.ONLINE);
-            builder.setActivity(Activity.watching("over the server for " + TimeUtil.getDuration(TimeUnit.FIT, 0)));
-            JDA = builder.build().awaitReady();
+            builder.setActivity(Activity.watching("over the server for " + TimeUtil.getDuration(TimeUnit.FIT, 0L)));
+
+            JDA = builder
+                    .disableCache(EnumSet.of(
+                            CacheFlag.EMOTE,
+                            CacheFlag.ACTIVITY,
+                            CacheFlag.CLIENT_STATUS))
+                    .enableCache(EnumSet.of(
+                            CacheFlag.VOICE_STATE))
+                    .build().awaitReady();
 
             //Setting variables
             timeStarted = System.currentTimeMillis();
@@ -57,13 +67,13 @@ public class KaiserBot extends ListenerAdapter {
         }
         LogManager.logConsole("Logged in as " + getJDA().getSelfUser().getName() + "#" + getJDA().getSelfUser().getDiscriminator() + "!", false, true);
 
-        startThread();
+        startThreads();
         registerListeners(JDA, new CommandManager());
 
         FeedInitializer.initializeFeeds();
 
         TimingUtil.Timing time = TimingUtil.stopTiming("startBot");
-        LogManager.logConsole("Bot started in " + TimeUtil.getDuration(TimeUnit.FIT, (int) time.getMilliDuration()), false, true);
+        LogManager.logConsole("Bot started in " + TimeUtil.getDuration(TimeUnit.FIT, time.getMilliDuration()), false, true);
     }
 
     private static void registerListeners(JDA jda, ListenerAdapter... listeners) {
@@ -74,12 +84,13 @@ public class KaiserBot extends ListenerAdapter {
 
     public static void shutdown() {
         logChannel.sendMessage(TimeUtil.getDate() + ": Stopped").queue();
-        runningThread.stop();
+        runningThread.interrupt();
+        MessageHandler.stopThread();
         FeedManager.stopThreads();
         JDA.shutdown();
     }
 
-    private static void startThread() {
+    private static void startThreads() {
         logChannel.sendMessage(TimeUtil.getDate() + ": Started").queue();
         runningThread = new Thread() {
             @SuppressWarnings("InfiniteLoopStatement")
@@ -87,15 +98,17 @@ public class KaiserBot extends ListenerAdapter {
             public void run() {
                 while (true) {
                     try {
-                        sleep(5000);
+                        sleep(60000);
                         JDA.getPresence().setActivity(Activity.watching("over the server for " + getTimeSinceStart(TimeUnit.FIT)));
                     } catch (InterruptedException e) {
-                        stop();
+                        interrupt();
                     }
                 }
             }
         };
         runningThread.start();
+
+        MessageHandler.startThread();
     }
 
     public static net.dv8tion.jda.api.JDA getJDA() {
@@ -107,6 +120,6 @@ public class KaiserBot extends ListenerAdapter {
     }
 
     public static String getTimeSinceStart(TimeUnit unit) {
-        return TimeUtil.getDuration(unit, (int) (System.currentTimeMillis() - timeStarted));
+        return TimeUtil.getDuration(unit, System.currentTimeMillis() - timeStarted);
     }
 }

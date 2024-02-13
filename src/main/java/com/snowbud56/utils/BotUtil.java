@@ -5,20 +5,26 @@ package com.snowbud56.utils;
 * Do not change or use this code without permission
 */
 
+import com.snowbud56.KaiserBot;
+import com.snowbud56.utils.messages.MessageHandler;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.PrivateChannel;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 public class BotUtil {
 
-    public static Message sendMessage(MessageChannel channel, String message) {
-        return channel.sendMessage(message).complete();
+    public static void sendMessage(MessageChannel channel, String message) {
+//        channel.sendMessage(message).queue();
+        MessageHandler.queueSendMessage(channel, message);
     }
-    public static Message sendMessage(MessageChannel channel, MessageEmbed message) {
-        return channel.sendMessage(message).complete();
+
+    public static void sendMessage(MessageChannel channel, MessageEmbed message) {
+        channel.sendMessageEmbeds(message).queue();
     }
 
 //    public static Message sendMemberMessage(MessageChannel channel, Member member, String message) {
@@ -28,9 +34,14 @@ public class BotUtil {
     public static Message sendTemporaryMessage(MessageChannel channel, String message, int secondsToDisplay) {
         Message msg = channel.sendMessage(message).complete();
         try {
-            msg.delete().delay(secondsToDisplay, TimeUnit.SECONDS).queue();
+            msg.delete().queueAfter(secondsToDisplay, TimeUnit.SECONDS);
         } catch (Exception ignored) {}
         return msg;
+    }
+
+    public static void sendTemporaryReply(SlashCommandEvent event, String message, int secondsToDisplay) {
+        event.reply(message).queue((msg) ->
+                msg.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
     }
 
     public static Message sendTemporaryMessage(MessageChannel channel, MessageEmbed embed, int secondsToDisplay) {
@@ -42,7 +53,9 @@ public class BotUtil {
     }
 
     public static boolean deleteMessage(Message message) {
-        if (canDelete(message)) message.delete().queue();
+        if (canDelete(message))
+//            message.delete().queue();
+            MessageHandler.queueDeleteMessage(message);
         return canDelete(message);
     }
 
@@ -52,9 +65,12 @@ public class BotUtil {
     }
 
     public static boolean canDelete(Message message) {
-        if (message.isPinned()) {
+        if (message.isPinned())
             return false;
-        }
+
+        if ((message.getChannel() instanceof PrivateChannel) && message.getAuthor() != KaiserBot.getJDA().getSelfUser())
+            return false;
+
         return true;
     }
 }

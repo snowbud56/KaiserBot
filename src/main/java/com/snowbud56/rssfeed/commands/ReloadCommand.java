@@ -22,13 +22,13 @@ public class ReloadCommand extends CommandBase {
 
     @Override
     public void execute(SlashCommandEvent event) {
-        if (event.getMember().getId().equals(Config.getInstance().getString("ownerID"))) {
+        if (event.getUser().getId().equals(Config.getInstance().getString("ownerID"))) {
             FeedManager.clearFeeds();
             Config.reloadConfig();
             FeedInitializer.initializeFeeds();
             event.reply("Reloaded feeds :+1:").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
         } else {
-            event.reply("You don't have permission to execute this command, only the other can execute this command.").queue();
+            event.reply("You don't have permission to execute this command, only the other can execute this command.").queue((message) -> message.deleteOriginal().queueAfter(10, TimeUnit.SECONDS));
         }
     }
 
