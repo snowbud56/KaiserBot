@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="KaiserBot:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f65a3772-4dc3-472d-b100-b880090a58e1" name="Default" comment="Added a lot... Haven't committed in a while">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Discord Bot.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/KaiserBot.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/KaiserBot_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Builds - Shortcut.lnk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Builds/Backups/KaiserBot (10-19-2021).jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Builds/Backups/KaiserBot (4-17-2022).jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Builds/Backups/KaiserBot (4-24-2022) (Last Before SlashCommands).jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Builds/Backups/KaiserBot (5-4-2022) (Last before Music).jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Builds/Backups/KaiserBot (8-15-2021).jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Builds/Backups/KaiserBot (9-24-2022).jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Builds/botsettings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Builds/run.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/KaiserBot$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/KaiserBot.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/command/Command.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/command/CommandBase.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/command/CommandManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/config/Config.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/config/ConfigLoader.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/general/ShutdownCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/moderation/commands/ClearCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/moderation/commands/SayCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/AudioPlayerSendHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/ConnectionLogger.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/GuildMusicManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/PlayerManager$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/PlayerManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/TrackScheduler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/command/JoinCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/command/LeaveCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/command/PauseCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/command/PlayCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/command/QueueCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/command/RepeatCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/command/SkipCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/command/StopCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/musicplayer/command/VolumeCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/FeedManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/FeedMessage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/FeedReader.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/commands/AnnounceCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/commands/InfoCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/commands/ReloadCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/commands/SilenceCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/commands/ToggleCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/commands/UpdateCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/feeds/BlueRidgeFeed.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/feeds/Feed$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/feeds/Feed.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/feeds/FeedInitializer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/feeds/FeedSettings.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/rssfeed/feeds/LiveIncidentFeed.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/BotUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/MathUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/TimeUnit.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/TimeUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/TimingUtil$Timing.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/TimingUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/managers/LogManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/messages/MessageAction$Action.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/messages/MessageAction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/messages/MessageHandler$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/messages/MessageHandler$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/snowbud56/utils/messages/MessageHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/snowbud56/rssfeed/feeds/Feed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/snowbud56/rssfeed/feeds/Feed.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="1efQ8CgTpWZzgZnUNv8QqxlWBN2" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.KaiserBot.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Testing.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.Bot.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programming/Discord Bot/Builds/KaiserBot.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.snowbud56.rssfeed.feeds" />
+      <recent name="com.snowbud56.rssfeed" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.snowbud56.moderation.commands" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JAR Application.Bot">
+    <configuration name="KaiserBot" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.snowbud56.KaiserBot" />
+      <module name="KaiserBot" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.snowbud56.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Bot" type="JarApplication">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/Builds/KaiserBot.jar" />
+      <option name="WORKING_DIRECTORY" value="D:\Programming\Discord Bot\Builds" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2">
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="KaiserBot:jar" />
+        </option>
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.KaiserBot" />
+      <item itemvalue="JAR Application.Bot" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.KaiserBot" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-18.0.2-corretto-18.0.2-8336523bb0d9-8518695b" />
+        <option value="jdk-18.0.2-corretto-18.0.2-f644763e9732-da6bd485" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f65a3772-4dc3-472d-b100-b880090a58e1" name="Default" comment="" />
+      <created>1533406922621</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1533406922621</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Updated MusicReleasedFeed to be more specialized and added a rough test command.">
+      <created>1650395209535</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1650395209535</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added condition on FeedReader, so it cannot be read more than once.">
+      <created>1650396000050</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1650396000050</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated to support SlashCommands">
+      <created>1650836727118</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1650836727118</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fixed a few bugs from updating to SlashCommands">
+      <created>1650841684226</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1650841684226</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added a lot... Haven't committed in a while">
+      <option name="closed" value="true" />
+      <created>1707800285107</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1707800285108</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated MusicReleasedFeed to be more specialized and added a rough test command." />
+    <MESSAGE value="Added condition on FeedReader, so it cannot be read more than once." />
+    <MESSAGE value="Updated to support SlashCommands" />
+    <MESSAGE value="Fixed a few bugs from updating to SlashCommands" />
+    <MESSAGE value="Added a lot... Haven't committed in a while" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a lot... Haven't committed in a while" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="JarApplication">
+        <watch expression="((FileNotFoundException)FileNotFoundException964_DebugLabel).cause" custom="java.io.FileNotFoundException" />
+        <watch expression="((FileNotFoundException)FileNotFoundException964_DebugLabel).cause" custom="java.io.FileNotFoundException" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>testing</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+</project>

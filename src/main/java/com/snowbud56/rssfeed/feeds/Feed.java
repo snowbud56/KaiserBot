@@ -112,7 +112,7 @@ public abstract class Feed {
                         //makes the thread wait the minimum cooldown for all threads before updating again
                         sleep(100);
                     } catch (InterruptedException e) {
-                        stop();
+                        interrupt();
                     }
                 }
             }
@@ -123,7 +123,7 @@ public abstract class Feed {
     }
 
     public void stopThread() {
-        runningThread.stop();
+        runningThread.interrupt();
     }
 
     public void forceCheck() {
